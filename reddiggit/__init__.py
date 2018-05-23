@@ -1,7 +1,4 @@
-import os
-
 from flask import Flask
-
 
 def create_app(test_config=None):
     # create and configure the app
@@ -16,14 +13,12 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
     # a simple page that says hello
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
+
+    from . import post
+    app.register_blueprint(post.bp, url_prefix='/post')
 
     return app
