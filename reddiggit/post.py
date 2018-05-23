@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, abort, g, request
+from flask import Blueprint, flash, redirect, url_for, render_template, abort, g, request
 from jinja2 import TemplateNotFound
 import base36
 
-bp = Blueprint('topic', __name__, template_folder='templates')
+bp = Blueprint('post', __name__, template_folder='templates')
 
 class Post(object):
 	def __init__(self, post_id, author, topic, votes=0):
@@ -10,27 +10,32 @@ class Post(object):
 		self.author = author
 		self.topic = topic
 		self.votes = votes
+
 posts=[]
 
 @bp.route('/')
-def show():
+def index():
     try:
-        return render_template('index.html',posts=posts)
+        return render_template('index.html', posts=posts)
     except TemplateNotFound:
         abort(404)
 
 @bp.route('/submit', methods=['GET', 'POST'])
 def add_post():
 	if request.method == 'POST':
-		posts.append( Post(base36.dumps(len(posts)), 'allenh', "Post No.%d" % (len(posts)+1)))
-		return 'Post added!'
+		#Topic should not exceed 255 characters.
+		if len(request.values['topic']) > 255 :
+			abort(400)
+		new_post = Post(base36.dumps(len(posts)), request.values['author'], request.values['topic'])
+		posts.append(new_post)
+		flash("Post %s added" % new_post.post_id)
+		return redirect(url_for('.index'))
 
 @bp.route('/<post_id>/<action>')
 def vote_post(post_id, action):
+	p = posts[base36.loads(post_id)]
 	if action=='upvote':
-		return 'post %s +1.' % post_id
+		p.votes +=1
 	elif action=='downvote':
-		return 'post %s -1.' % post_id
-
-
-
+		p.votes -=1
+	return redirect(url_for('.index'))
