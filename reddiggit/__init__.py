@@ -19,6 +19,6 @@ def create_app(test_config=None):
         return 'Hello, World!'
 
     from . import post
-    app.register_blueprint(post.bp, url_prefix='/post')
+    app.register_blueprint(post.bp)
 
     return app
