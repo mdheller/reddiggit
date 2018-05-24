@@ -1,91 +1,101 @@
-<style type="text/css">
-.arrow-up {
-  width: 0;
-  height: 0;
-  margin: auto;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #FF8B60;
-  cursor: pointer;
-}
-.arrow-down {
-  width: 0;
-  height: 0;
-  margin: auto;
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+	.arrow-up {
+		width: 0;
+		height: 0;
+		margin: auto;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-bottom: 10px solid #FF8B60;
+		cursor: pointer;
+	}
+	.arrow-down {
+		width: 0;
+		height: 0;
+		margin: auto;
 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #9494FF;
-  cursor: pointer;
-}
-.topbar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background-color: white;
-  border-bottom: 1px solid black;
-}
-.container{
-  margin-top: 50px;
-  padding-top: 10px;
-}
-.entry {
-	border-left: 5px solid black;
-	margin: 10px;
-	width: 100%;
-}
-.rating {
-	font-size: 1.5em;
-}
-.voting {
-	width: 5%;
-	margin-left: 10px;
-	text-align: center;
-	display: inline-block;
-}
-.content {
-	padding: 0 0 0 10px;
-	vertical-align: top;
-	display: inline-block;
-}
-.topic {
-	font-size: 2em;
-}
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 10px solid #9494FF;
+		cursor: pointer;
+	}
+	.topbar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		background-color: white;
+		border-bottom: 1px solid black;
+	}
+	.container{
+		margin-top: 50px;
+		padding-top: 10px;
+	}
+	.entry {
+		border-left: 5px solid black;
+		margin: 10px;
+		width: 100%;
+	}
+	.rating {
+		font-size: 1.5em;
+	}
+	.voting {
+		width: 5%;
+		margin-left: 10px;
+		text-align: center;
+		display: inline-block;
+	}
+	.content {
+		padding: 0 0 0 10px;
+		vertical-align: top;
+		display: inline-block;
+	}
+	.topic {
+		font-size: 2em;
+	}
 
 </style>
-<div class="topbar postform">
-	Submit New Topic
-	<form action="/post/submit" method="POST">
-		User:<input type="text" name="author">
-	  	Topic:<input type="text" name="topic" maxlength="255">
-		<input type="submit" value="Submit">
-	</form>
-</div>
-<div class="container">
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-  {% for message in messages %}
-  <h3>{{ message }}</h3>
-  {% endfor %}
-{% endif %}
-{% endwith %}
-{% if posts %}
-	{% for post in posts %}
-	<div class="entry">
-		<div class="voting">
-			<div class="arrow-up" onclick="location.href='/post/{{ post.post_id }}/upvote';"></div>
-			<div class="rating">{{ post.votes }}</div>
-			<div class="arrow-down" onclick="location.href='/post/{{ post.post_id }}/downvote';"></div>
-		</div>
-		<div class="content">
-			<div class="topic">{{ post.topic }}</div>
-			<div class="label">
-				submitted on {{ post.create_time }} by {{ post.author }}
+<title>Homepage - Reddiggit</title>
+</head>
+<body>
+
+	<div class="topbar postform">
+		Welcome to Reddiggit! Submit new topic here!
+		<form action="/post/submit" method="POST">
+			User:<input type="text" name="author" required>
+			Topic:<input type="text" name="topic" maxlength="255" required>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+	<div class="container">
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		{% for message in messages %}
+		<h3>{{ message }}</h3>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+		{% if posts %}
+		{% for post in posts %}
+		<div class="entry">
+			<div class="voting">
+				<div class="arrow-up" onclick="location.href='/post/{{ post.post_id }}/upvote';"></div>
+				<div class="rating">{{ post.votes }}</div>
+				<div class="arrow-down" onclick="location.href='/post/{{ post.post_id }}/downvote';"></div>
+			</div>
+			<div class="content">
+				<div class="topic">{{ post.topic }}</div>
+				<div class="label">
+					submitted on {{ post.create_time }} by {{ post.author }}
+				</div>
 			</div>
 		</div>
+		{% endfor %}
+		{% endif %}
 	</div>
-	{% endfor %}
-{% endif %}
-</div>
+</body>
+</html>
+
