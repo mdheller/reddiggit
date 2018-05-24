@@ -1,0 +1,11 @@
+{% if posts %}
+<ol>
+  {% for post in posts %}
+    <li>
+      <h2>{{ post.votes }}</h2>
+      <h3>{{ post.topic }}</h3>submitted by {{ post.author }}
+    </li>
+  {% endfor %}
+</ol>
+{% endif %}
+
