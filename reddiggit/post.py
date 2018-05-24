@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, url_for, render_template, abort, g, request
+from flask import Blueprint, flash, redirect, url_for, render_template, abort, request
 from jinja2 import TemplateNotFound
 from datetime import datetime
 import base36
