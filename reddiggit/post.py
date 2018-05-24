@@ -53,7 +53,7 @@ def index():
     except TemplateNotFound:
         abort(404)
 
-@bp.route('/submit', methods=['GET', 'POST'])
+@bp.route('/post/submit', methods=['POST'])
 def add_post():
     if request.method == 'POST':
         #Topic should not exceed 255 characters.
@@ -65,7 +65,7 @@ def add_post():
         flash("Post %s added" % new_post.post_id)
     return redirect(url_for('.index'))
 
-@bp.route('/<post_id>/<action>')
+@bp.route('/post/<post_id>/<action>')
 def vote_post(post_id, action):
     p = get_post_by_id(post_id)
     if action=='upvote':

@@ -14,6 +14,6 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
 
     from . import post
-    app.register_blueprint(post.bp, url_prefix='/post')
+    app.register_blueprint(post.bp)
 
     return app
