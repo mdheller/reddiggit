@@ -55,22 +55,37 @@ def index():
 
 @bp.route('/post/submit', methods=['POST'])
 def add_post():
-    if request.method == 'POST':
-        #Topic should not exceed 255 characters.
-        if len(request.values['topic']) > 255 :
-            abort(400)
-        new_post = Post(base36.dumps(len(posts)), request.values['author'], request.values['topic'])
+    author = request.form.get('author', None)
+    topic = request.form.get('topic', None)
+
+    # If topic exceeds 255 characters, return with 400 Bad Request.
+    if len(topic) > 255 :
+        abort(400)
+
+    if author and topic:
+        new_post = Post(base36.dumps(len(posts)), author, topic)
+        # Append the new post and sort the posts by upvotes.
         posts.append(new_post)
         posts.sort(reverse=True)
-        flash("Post %s added" % new_post.post_id)
+
+        flash("Post added with id %s" % new_post.post_id)
+    else:
+        flash("Post failed, please fill both user and topic field above.")
+
     return redirect(url_for('.index'))
 
 @bp.route('/post/<post_id>/<action>')
 def vote_post(post_id, action):
     p = get_post_by_id(post_id)
-    if action=='upvote':
-        p.votes +=1
-    elif action=='downvote':
-        p.votes -=1
-    posts.sort(reverse=True)
+    # If post can't be found with post_id, return 400 Bad Request.
+    if p is None:
+        abort(400)
+    else:
+        if action=='upvote':
+            p.votes +=1
+        elif action=='downvote':
+            p.votes -=1
+        # When upvote/downvote, sort the posts by upvotes, descending.
+        posts.sort(reverse=True)
+
     return redirect(url_for('.index'))
