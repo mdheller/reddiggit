@@ -1,7 +1,7 @@
 from reddiggit import post
 
 def test_submit(client, app):
-    assert len(post.posts) == 0 
+    assert len(post.posts) == 0
     response = client.post('/post/submit', data=dict(
         author='test_submit',
         topic='Pisuke'
