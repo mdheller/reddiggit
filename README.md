@@ -26,7 +26,7 @@ To build and run this application locally, you will need:
 
 And this application should start running on [http://localhost:5000/](http://localhost:5000/).
 
-##Testing Application
+## Testing Application
 Tests using [pytest](https://pytest.org/). All the test cases are in the tests/ directory.
 
 Execute `python -m pytest tests/` to run all the tests at once.
@@ -40,7 +40,7 @@ Execute `python -m pytest tests/` to run all the tests at once.
   * votes (int): The number of *upvote - downvote*, default is 0.
   * create_time (str): The string of datetime when user submit this post.
 * Neither *author* nor *topic* attribute can be empty.
-* Topic should not exceeds 255 characters, which is handled in both [frontend](https://github.com/w84miracle/reddiggit/blob/master/reddiggit/templates/index.html#L71) and [backend](https://github.com/w84miracle/reddiggit/blob/master/reddiggit/post.py#L63).
+* Topic should not exceeds 255 characters, which is handled in both [frontend](https://github.com/w84miracle/reddiggit/blob/master/reddiggit/templates/index.html#L71) and [backend](https://github.com/w84miracle/reddiggit/blob/master/reddiggit/post.py#L62-L64).
 * Posts will be given a unique id on submissions to identify each post. Which is a base 36 encoding text. (Like Reddit's [fullnames](https://www.reddit.com/dev/api/))
 * Like Reddit, user can upvote/downvote a topic by clicking arrows on the left of each topics.
 
