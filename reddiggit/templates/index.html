@@ -1,11 +1,77 @@
-{% if posts %}
-<ol>
-  {% for post in posts %}
-    <li>
-      <h2>{{ post.votes }}</h2>
-      <h3>{{ post.topic }}</h3>submitted by {{ post.author }}
-    </li>
+<style type="text/css">
+.arrow-up {
+  width: 0;
+  height: 0;
+  margin: auto;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #FF8B60;
+  cursor: pointer;
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  margin: auto;
+
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #9494FF;
+  cursor: pointer;
+}
+.entry {
+	border-left: 5px solid black;
+	margin: 10px;
+	width: 100%;
+}
+.rating {
+	font-size: 1.5em;
+}
+.voting {
+	width: 5%;
+	margin-left: 10px;
+	text-align: center;
+	display: inline-block;
+}
+.content {
+	padding: 0 0 0 10px;
+	vertical-align: top;
+	display: inline-block;
+}
+.topic {
+	font-size: 2em;
+}
+
+</style>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for message in messages %}
+  <h3>{{ message }}</h3>
   {% endfor %}
-</ol>
 {% endif %}
+{% endwith %}
+{% if posts %}
+	{% for post in posts %}
+	<div class="entry">
+		<div class="voting">
+			<div class="arrow-up" onclick="location.href='/post/{{ post.post_id }}/upvote';"></div>
+			<div class="rating">{{ post.votes }}</div>
+			<div class="arrow-down" onclick="location.href='/post/{{ post.post_id }}/downvote';"></div>
+		</div>
+		<div class="content">
+			<div class="topic">{{ post.topic }}</div>
+			<div class="label">
+				submitted by {{ post.author }}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+{% endif %}
+<div class="postform">
+	Submit New Topic
+	<form action="/post/submit" method="POST">
+		User:<input type="text" name="author"><br>
+	  	Topic:<input type="text" name="topic" maxlength="255"><br>
+		<input type="submit" value="Submit">
+	</form>
+</div>
 
