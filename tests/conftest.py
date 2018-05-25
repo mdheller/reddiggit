@@ -8,7 +8,7 @@ def app(request):
     })
     yield app
     def fin():
-        #Drop all post after each test.
+        #Drop all posts after each test.
         post.posts = []
     request.addfinalizer(fin)
 
