@@ -2,15 +2,19 @@ import os
 import tempfile
 
 import pytest
-from reddiggit import create_app
+from reddiggit import create_app, post
 
 
 @pytest.fixture
-def app():
+def app(request):
     app = create_app({
         'TESTING': True,
     })
     yield app
+    def fin():
+        #Drop all post after each test.
+        post.posts = []
+    request.addfinalizer(fin)
 
 @pytest.fixture
 def client(app):
