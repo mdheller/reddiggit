@@ -1,9 +1,5 @@
-import os
-import tempfile
-
 import pytest
 from reddiggit import create_app
-
 
 @pytest.fixture
 def app():
@@ -15,7 +11,6 @@ def app():
 @pytest.fixture
 def client(app):
     return app.test_client()
-
 
 @pytest.fixture
 def runner(app):
