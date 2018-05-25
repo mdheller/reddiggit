@@ -18,6 +18,19 @@
   border-top: 10px solid #9494FF;
   cursor: pointer;
 }
+.topbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  border-bottom: 1px solid black;
+}
+.container{
+  margin-top: 50px;
+  padding-top: 10px;
+}
 .entry {
 	border-left: 5px solid black;
 	margin: 10px;
@@ -42,6 +55,15 @@
 }
 
 </style>
+<div class="topbar postform">
+	Submit New Topic
+	<form action="/post/submit" method="POST">
+		User:<input type="text" name="author">
+	  	Topic:<input type="text" name="topic" maxlength="255">
+		<input type="submit" value="Submit">
+	</form>
+</div>
+<div class="container">
 {% with messages = get_flashed_messages() %}
 {% if messages %}
   {% for message in messages %}
@@ -60,18 +82,10 @@
 		<div class="content">
 			<div class="topic">{{ post.topic }}</div>
 			<div class="label">
-				submitted by {{ post.author }}
+				submitted on {{ post.create_time }} by {{ post.author }}
 			</div>
 		</div>
 	</div>
 	{% endfor %}
 {% endif %}
-<div class="postform">
-	Submit New Topic
-	<form action="/post/submit" method="POST">
-		User:<input type="text" name="author"><br>
-	  	Topic:<input type="text" name="topic" maxlength="255"><br>
-		<input type="submit" value="Submit">
-	</form>
 </div>
-
