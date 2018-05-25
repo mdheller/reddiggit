@@ -38,7 +38,7 @@ def get_post_by_id(post_id):
     """Return a post object for a given post_id."""
     global posts
     for p in posts:
-        if p.post_id == str(base36.loads(post_id)):
+        if p.post_id == post_id:
             break
     else:
         p = None
