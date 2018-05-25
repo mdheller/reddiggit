@@ -58,11 +58,10 @@ def add_post():
     author = request.form.get('author', None)
     topic = request.form.get('topic', None)
 
-    # If topic exceeds 255 characters, return with 400 Bad Request.
-    if len(topic) > 255 :
-        abort(400)
-
     if author and topic:
+        # If topic exceeds 255 characters, return with 400 Bad Request.
+        if len(topic) > 255 :
+            abort(400)
         new_post = Post(base36.dumps(len(posts)), author, topic)
         # Append the new post and sort the posts by upvotes.
         posts.append(new_post)
