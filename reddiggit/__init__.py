@@ -14,6 +14,7 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
 
     from . import post
+    #Use Blueprint for better scalibility.
     app.register_blueprint(post.bp)
 
     return app
