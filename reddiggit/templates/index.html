@@ -65,7 +65,7 @@
 <body>
 
 	<div class="topbar postform">
-		Welcome to Reddiggit! Submit new topic here!
+		Submit new topics here!
 		<form action="/post/submit" method="POST">
 			User:<input type="text" name="author" required>
 			Topic:<input type="text" name="topic" maxlength="255" required>
@@ -73,13 +73,21 @@
 		</form>
 	</div>
 	<div class="container">
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-		{% for message in messages %}
-		<h3>{{ message }}</h3>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
+		<div class="entry">
+			<div class="content">
+				<h3>
+				{% with messages = get_flashed_messages() %}
+				  {% if messages %}
+				    {% for message in messages %}
+				      {{ message }}
+				    {% endfor %}
+				  {% else %}
+				      Welcome to Reddiggit!
+				  {% endif %}
+				{% endwith %}
+				</h3>
+			</div>
+		</div>
 		{% if posts %}
 		{% for post in posts %}
 		<div class="entry">
