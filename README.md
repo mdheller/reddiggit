@@ -45,7 +45,7 @@ Execute `python -m pytest tests/` to run all the tests at once.
 * Like Reddit, user can upvote/downvote a topic by clicking arrows on the left of each topics.
 
 ### In-memory
-* All posts are store in a Python list.  **Hence all topics will disappear after the application restarts.**
+* Because Python's list can easily [sorted](https://docs.python.org/2/howto/sorting.html) and presented. All posts are store in a Python list, **hence all topics will disappear after the application restarts.**
 
 ### Sorting
 * Homepage will always show only top 20 posts, sorting descendingly by each post's upvote amount.
